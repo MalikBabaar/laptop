@@ -1,17 +1,18 @@
-#Base image
-FROM python:3.7
+# Use a slim Python image
+FROM python:3.7-slim
 
-#Workdir
+# Set the working directory inside the container
 WORKDIR /app
 
-#Copy
-COPY ./app
+# Copy and install dependencies
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
 
-#Run
-RUN pip install -r requirements.txt
+# Copy your application files
+COPY . .
 
-#Port
-EXPOSE 8501
+# Expose Streamlit default port
+EXPOSE 8080
 
-#Command
-CMD ["streamlit", "run", "app.py"]
+# Command to run your app
+CMD ["streamlit", "run", "app.py", "--server.address=0.0.0.0"]
