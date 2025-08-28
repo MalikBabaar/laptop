@@ -2,9 +2,25 @@ import streamlit as st
 import pickle
 import numpy as np
 
-# import the model
-pipe = pickle.load(open('pipe.pkl','rb'))
-df = pickle.load(open('df.pkl','rb'))
+st.write("🚀 App started...")
+
+try:
+    st.write("🔄 Loading model...")
+    pipe = pickle.load(open('pipe.pkl','rb'))
+    st.write("✅ Model loaded successfully.")
+except Exception as e:
+    st.error(f"❌ Failed to load model: {e}")
+    # stop the app if model loading fails
+    st.stop()
+
+try:
+    st.write("🔄 Loading dataframe...")
+    df = pickle.load(open('df.pkl','rb'))
+    st.write("✅ DataFrame loaded successfully.")
+except Exception as e:
+    st.error(f"❌ Failed to load dataframe: {e}")
+    # stop the app if dataframe loading fails
+    st.stop()
 
 st.title("Laptop Predictor")
 
@@ -63,4 +79,3 @@ if st.button('Predict Price'):
 
     query = query.reshape(1,12)
     st.title("The predicted price of this configuration is " + str(int(np.exp(pipe.predict(query)[0]))))
-
