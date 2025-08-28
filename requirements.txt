@@ -1,2 +1,6 @@
 streamlit
-sklearn
+scikit-learn==0.24.1
+numpy
+pandas
+scipy
+joblib
